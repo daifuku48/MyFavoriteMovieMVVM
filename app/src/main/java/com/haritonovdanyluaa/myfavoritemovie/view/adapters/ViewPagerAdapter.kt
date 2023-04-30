@@ -1,9 +1,10 @@
-package com.haritonovdanyluaa.myfavoritemovie
+package com.haritonovdanyluaa.myfavoritemovie.view.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.haritonovdanyluaa.myfavoritemovie.view.SearchFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -13,7 +14,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
 
     override fun createFragment(position: Int): Fragment {
         return if (position == 1) {
-            searchFragment()
+            SearchFragment()
         } else favoritesFragment()
     }
 
