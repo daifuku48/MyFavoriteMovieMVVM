@@ -1,4 +1,4 @@
-package com.haritonovdanyluaa.myfavoritemovie
+package com.haritonovdanyluaa.myfavoritemovie.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

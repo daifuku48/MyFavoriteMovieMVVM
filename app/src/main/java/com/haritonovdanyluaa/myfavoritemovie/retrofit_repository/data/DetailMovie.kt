@@ -4,24 +4,25 @@ import com.google.gson.annotations.SerializedName
 
 interface DetailMovie {
     data class Base (
-        val Title : String,
-
-        val Year : String,
-
-        val Rated: String,
-
-        val Released: String,
-
-        @SerializedName("Runtime") val time: String,
-
-        val Genre: String,
-
-        val Director: String,
-
-        val Actors: String,
-
-        val Plot: String,
-
-        val Poster : String,
+        @SerializedName("Title")
+        private val title : String,
+        @SerializedName("Year")
+        private val year : String,
+        @SerializedName("Rated")
+        private val rated: String,
+        @SerializedName("Released")
+        private val released: String,
+        @SerializedName("Runtime")
+        private val time: String,
+        @SerializedName("Genre")
+        private val genre: String,
+        @SerializedName("Director")
+        private val director: String,
+        @SerializedName("Actors")
+        private val actors: String,
+        @SerializedName("Plot")
+        private val plot: String,
+        @SerializedName("Poster")
+        private val poster : String,
     ) : DetailMovie
 }

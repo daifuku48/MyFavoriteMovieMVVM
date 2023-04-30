@@ -1,4 +1,4 @@
-package com.haritonovdanyluaa.myfavoritemovie.view
+package com.haritonovdanyluaa.myfavoritemovie.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.haritonovdanyluaa.myfavoritemovie.R
 
 class SearchFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
