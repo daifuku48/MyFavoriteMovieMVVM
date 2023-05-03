@@ -1,5 +1,6 @@
 package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -14,8 +15,8 @@ interface GenreDAO {
     suspend fun deleteGenre(genre: GenreEntity)
 
     @Query("SELECT * FROM GENRE_TABLE")
-    suspend fun getAllGenre() : List<GenreEntity>
+    fun getAllGenre() : LiveData<List<GenreEntity>>
 
-    @Query("SELECT * FROM GENRE_TABLE WHERE genreId = :id")
-    suspend fun getGenre(id: Int) : GenreEntity
+    @Query("SELECT * FROM GENRE_TABLE WHERE id = :id")
+    suspend fun getGenre(id: Int) : LiveData<GenreEntity>
 }

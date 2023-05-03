@@ -20,8 +20,8 @@ interface MovieDAO {
     suspend fun deleteFavoriteMovie(movie: MovieEntity)
 
     @Query("SELECT * FROM MOVIE_TABLE")
-    suspend fun getAllMovie() : LiveData<List<MovieEntity>>
+    fun getAllMovie() : LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM MOVIE_TABLE WHERE genre = :genre")
-    suspend fun getAllWithGenre(genre: String) : LiveData<List<MovieEntity>>
+    fun getAllWithGenre(genre: GenreEntity) : LiveData<List<MovieEntity>>
 }

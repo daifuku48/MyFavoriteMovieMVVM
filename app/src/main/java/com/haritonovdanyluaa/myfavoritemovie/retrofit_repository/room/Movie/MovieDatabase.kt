@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 @Database(entities = [MovieEntity::class, GenreEntity::class], version = 1)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieDao() : MovieDAO
-
+    abstract fun genreDao() : GenreDAO
     companion object {
 
         @Volatile
@@ -23,17 +23,6 @@ abstract class MovieDatabase : RoomDatabase() {
                     "movie_db"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(object : RoomDatabase.Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            // do something when database is created
-                        }
-
-                        override fun onOpen(db: SupportSQLiteDatabase) {
-                            super.onOpen(db)
-                            // do something when database is opened
-                        }
-                    })
                     .build()
                 Instance = instance
 
