@@ -2,6 +2,8 @@ package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import com.google.gson.Gson
+import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.MovieApi
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreDAO
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreEntity
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieDAO
@@ -10,9 +12,15 @@ import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.Movi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 class Repository(application: Application) {
 
+    private lateinit  var movieApi : MovieApi
     private var genreDAO : GenreDAO
     private var movieDAO : MovieDAO
     private var genres : LiveData<List<GenreEntity>>
@@ -25,6 +33,25 @@ class Repository(application: Application) {
         val movieDatabase = MovieDatabase.getDatabase(application)
         genreDAO = movieDatabase.genreDao()
         movieDAO = movieDatabase.movieDao()
+        configureRetrofit()
+    }
+
+    private fun configureRetrofit()
+    {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://www.omdbapi.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient)
+            .build()
+
+        movieApi = retrofit.create(MovieApi::class.java)
     }
 
     fun getGenreMovies(genre: GenreEntity) : LiveData<List<MovieEntity>>
