@@ -4,8 +4,10 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.Repository
+import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.SearchData
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreEntity
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieEntity
 
@@ -29,7 +31,9 @@ class MainViewModel(private var application: Application) : AndroidViewModel(app
         appRepository.deleteMovie(movieEntity)
     }
 
-
-
+    fun getMovieFromApi(name: String) : MutableLiveData<SearchData.Base>
+    {
+        return appRepository.searchMoviesFromApi(name)
+    }
 
 }

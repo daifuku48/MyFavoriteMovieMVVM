@@ -2,8 +2,11 @@ package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.Movie
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.MovieApi
+import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.SearchData
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreDAO
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreEntity
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieDAO
@@ -99,5 +102,15 @@ class Repository(application: Application) {
         CoroutineScope(Dispatchers.IO).launch{
             genreDAO.deleteGenre(genre)
         }
+    }
+
+    fun searchMoviesFromApi(name: String) : MutableLiveData<SearchData.Base>
+    {
+        val myLiveData = MutableLiveData<SearchData.Base>()
+        CoroutineScope(Dispatchers.IO).launch{
+            val result = movieApi.getMovies(name, "244031db")
+            myLiveData.value = result
+        }
+        return myLiveData
     }
 }

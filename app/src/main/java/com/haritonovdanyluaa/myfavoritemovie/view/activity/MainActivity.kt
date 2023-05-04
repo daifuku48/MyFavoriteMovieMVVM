@@ -15,9 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-
+        binding?.tabLayout?.addTab(binding?.tabLayout?.newTab()!!.setText("Search"))
         binding?.tabLayout?.addTab(binding?.tabLayout?.newTab()!!.setText("Favorites"))
-        binding?.tabLayout?.addTab(binding?.tabLayout?.newTab()!!.setText("Movies"))
 
         val fragmentManager = supportFragmentManager
         viewPagerAdapter = ViewPagerAdapter(fragmentManager, lifecycle)

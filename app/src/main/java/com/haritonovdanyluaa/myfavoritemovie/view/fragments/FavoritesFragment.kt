@@ -5,11 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.haritonovdanyluaa.myfavoritemovie.R
+import com.haritonovdanyluaa.myfavoritemovie.databinding.FragmentFavoritesBinding
+import com.haritonovdanyluaa.myfavoritemovie.view.ViewModel.MainViewModel
 
 class FavoritesFragment : Fragment() {
+    private var _binding : FragmentFavoritesBinding? = null
+    private val binding get() = _binding
+
+    var mainViewModel : MainViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     override fun onCreateView(
@@ -17,6 +27,11 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }
