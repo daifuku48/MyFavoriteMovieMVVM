@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 class GenreEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private val id: Int,
+     val id: Int,
     @ColumnInfo(name = "name_genre")
-    private val name: String
+     val name: String
 )

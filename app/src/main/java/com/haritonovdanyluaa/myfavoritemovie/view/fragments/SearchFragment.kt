@@ -31,7 +31,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.searchImg?.setOnClickListener {
             val text = binding?.searchEditText?.text
-
+            val list = vm.getMovieFromApi(text.toString())
         }
     }
 

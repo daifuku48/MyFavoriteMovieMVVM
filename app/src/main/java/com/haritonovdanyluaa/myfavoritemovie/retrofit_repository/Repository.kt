@@ -1,6 +1,7 @@
 package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -49,7 +50,7 @@ class Repository(application: Application) {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://www.omdbapi.com/")
+            .baseUrl("https://www.omdbapi.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
             .build()
@@ -61,7 +62,7 @@ class Repository(application: Application) {
     {
         var movies : LiveData<List<MovieEntity>>? = null
         CoroutineScope(Dispatchers.IO).launch  {
-            movies = movieDAO.getAllWithGenre(genre)
+            movies = movieDAO.getAllWithGenre(genre.name)
         }
         return movies!!
     }
@@ -107,10 +108,12 @@ class Repository(application: Application) {
     fun searchMoviesFromApi(name: String) : MutableLiveData<SearchData.Base>
     {
         val myLiveData = MutableLiveData<SearchData.Base>()
-        CoroutineScope(Dispatchers.IO).launch{
-            val result = movieApi.getMovies(name, "244031db")
-            myLiveData.value = result
+        lifecycle.launch{
+
         }
+        val result = movieApi.getMovies(name, "244031db")
+        myLiveData.value = result
+        Log.d("movie", "movie is searching")
         return myLiveData
     }
 }

@@ -23,5 +23,5 @@ interface MovieDAO {
     fun getAllMovie() : LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM MOVIE_TABLE WHERE genre = :genre")
-    fun getAllWithGenre(genre: GenreEntity) : LiveData<List<MovieEntity>>
+    fun getAllWithGenre(genre: String) : LiveData<List<MovieEntity>>
 }

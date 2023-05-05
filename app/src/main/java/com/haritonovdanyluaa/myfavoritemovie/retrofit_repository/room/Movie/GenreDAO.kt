@@ -18,5 +18,5 @@ interface GenreDAO {
     fun getAllGenre() : LiveData<List<GenreEntity>>
 
     @Query("SELECT * FROM GENRE_TABLE WHERE id = :id")
-    suspend fun getGenre(id: Int) : LiveData<GenreEntity>
+    fun getGenre(id: String) : LiveData<GenreEntity>
 }
