@@ -108,9 +108,6 @@ class Repository(application: Application) {
     fun searchMoviesFromApi(name: String) : MutableLiveData<SearchData.Base>
     {
         val myLiveData = MutableLiveData<SearchData.Base>()
-        lifecycle.launch{
-
-        }
         val result = movieApi.getMovies(name, "244031db")
         myLiveData.value = result
         Log.d("movie", "movie is searching")
