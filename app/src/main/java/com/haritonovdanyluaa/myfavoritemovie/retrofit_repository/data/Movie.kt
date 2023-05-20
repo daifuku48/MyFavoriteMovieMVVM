@@ -1,9 +1,7 @@
 package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data
 
-interface Movie {
-    data class Base(
-        private val Title : String,
-        private val Year : String,
-        private val Poster : String
-    ) : Movie
-}
+data class Movie(
+        val Title : String,
+        val Year : String,
+        val Poster : String
+    )

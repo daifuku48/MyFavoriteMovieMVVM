@@ -9,7 +9,7 @@ interface MovieApi {
     suspend fun getMovies(
         @Query("s") s: String,
         @Query("apikey") apikey: String
-    ): SearchData.Base
+    ): SearchData
 
     @GET("/")
     suspend fun getDetailMovies(

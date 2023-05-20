@@ -6,10 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.Repository
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.SearchData
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreEntity
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieEntity
+import kotlinx.coroutines.launch
 
 class MainViewModel(private var application: Application) : AndroidViewModel(application) {
     private var appRepository : Repository = Repository(application)
@@ -31,9 +33,14 @@ class MainViewModel(private var application: Application) : AndroidViewModel(app
         appRepository.deleteMovie(movieEntity)
     }
 
-    fun getMovieFromApi(name: String) : MutableLiveData<SearchData.Base>
+    fun getMovieFromApi(name: String) : LiveData<SearchData>
     {
-        return appRepository.searchMoviesFromApi(name)
+        val result = MutableLiveData<SearchData>()
+        viewModelScope.launch {
+            val searchData = appRepository.searchMoviesFromApi(name)
+            result.postValue(searchData.value)
+        }
+        return result
     }
 
 }

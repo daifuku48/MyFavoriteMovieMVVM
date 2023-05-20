@@ -15,6 +15,7 @@ import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.Movi
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -105,12 +106,14 @@ class Repository(application: Application) {
         }
     }
 
-    fun searchMoviesFromApi(name: String) : MutableLiveData<SearchData.Base>
+    suspend fun searchMoviesFromApi(name: String) : MutableLiveData<SearchData>
     {
-        val myLiveData = MutableLiveData<SearchData.Base>()
-        val result = movieApi.getMovies(name, "244031db")
-        myLiveData.value = result
-        Log.d("movie", "movie is searching")
+        val myLiveData = MutableLiveData<SearchData>()
+        var result : SearchData
+        coroutineScope {
+            result = movieApi.getMovies(name, "244031db")
+            myLiveData.value = result
+        }
         return myLiveData
     }
 }
