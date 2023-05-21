@@ -19,6 +19,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -106,14 +107,13 @@ class Repository(application: Application) {
         }
     }
 
-    suspend fun searchMoviesFromApi(name: String) : MutableLiveData<SearchData>
+    suspend fun searchMoviesFromApi(name: String) : Response<SearchData>
     {
-        val myLiveData = MutableLiveData<SearchData>()
-        var result : SearchData
+        var myLiveData : Response<SearchData>
+        var result : Response<SearchData>
         coroutineScope {
             result = movieApi.getMovies(name, "244031db")
-            myLiveData.value = result
         }
-        return myLiveData
+        return result
     }
 }
