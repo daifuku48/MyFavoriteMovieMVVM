@@ -1,31 +1,32 @@
 package com.haritonovdanyluaa.myfavoritemovie.view.adapters
 
 import android.content.Context
-import android.media.session.PlaybackState.CustomAction
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.haritonovdanyluaa.myfavoritemovie.R
-import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.SearchData
+import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.Movie
 
-class RecyclerAdapter(var list : LiveData<SearchData>,
-                      var liveCycleOwner: LifecycleOwner,
+class RecyclerAdapter(var list : List<Movie>,
                       var context: Context
 )
     : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
+    private lateinit var mListener : OnItemClickListener
 
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mListener = listener
+    }
 
-     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+     class ViewHolder(view: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(view){
          val image: ImageView
          val title: TextView
          val year: TextView
@@ -34,25 +35,25 @@ class RecyclerAdapter(var list : LiveData<SearchData>,
              title = view.findViewById(R.id.titleRecyclerView)
              image = view.findViewById(R.id.imageRecyclerView)
              year = view.findViewById(R.id.year_recycler_view)
+             view.setOnClickListener {
+                 listener.onItemClick(adapterPosition)
+             }
          }
      }
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.adapter_recycler_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, mListener)
     }
 
-    override fun getItemCount() = list.value?.Search?.size ?: 3
+    override fun getItemCount() = list.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        Log.d("image", list.value?.Search?.get(position)?.Poster.toString())
-        viewHolder.title.text = list.value?.Search?.get(position)?.Title
-        viewHolder.year.text = list.value?.Search?.get(position)?.Year
+        viewHolder.title.text = list[position].Title
+        viewHolder.year.text = list[position].Year
         Glide.with(context)
-            .load(list.value?.Search?.get(position)?.Poster.toString())
+            .load(list[position].Poster)
             .skipMemoryCache(true)
             .centerCrop()
             .into(viewHolder.image)

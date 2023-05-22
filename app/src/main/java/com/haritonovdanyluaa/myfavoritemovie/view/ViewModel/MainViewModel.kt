@@ -22,7 +22,10 @@ class MainViewModel(private var application: Application) : AndroidViewModel(app
     private var appRepository : Repository = Repository(application)
     private var movies : LiveData<List<MovieEntity>> = appRepository.getAllMovies()
     private var genres : LiveData<List<GenreEntity>> = appRepository.getAllGenres()
-    val movieList = MutableLiveData<List<Movie>>()
+    private var _movieList = MutableLiveData<SearchData>()
+    val movieList : LiveData<SearchData>
+        get() = _movieList
+
     val loading = MutableLiveData<Boolean>()
     var job: Job? = null
     fun getMovieByGenre(genre: GenreEntity) : LiveData<List<MovieEntity>>
@@ -34,8 +37,7 @@ class MainViewModel(private var application: Application) : AndroidViewModel(app
             val response = appRepository.searchMoviesFromApi(name)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    movieList.postValue(response.body()?.Search)
-                    loading.value = false
+                    _movieList.postValue(response.body())
                 }
             }
         }

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.haritonovdanyluaa.myfavoritemovie.R
@@ -35,12 +37,21 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(requireActivity())
+
+        vm.movieList.observe(viewLifecycleOwner){ items ->
+            val adapter = RecyclerAdapter(items.Search, requireContext())
+            adapter.setOnItemClickListener(object : RecyclerAdapter.OnItemClickListener{
+                override fun onItemClick(position: Int) {
+
+                        items.Search[position].Title
+                }
+            })
+            binding?.recyclerView?.adapter = adapter
+        }
+
         binding?.recyclerView?.layoutManager = layoutManager
         binding?.searchImg?.setOnClickListener {
-            val text = binding?.searchEditText?.text
-            val list = vm.getMovieFromApi(text.toString())
-            val adapter = RecyclerAdapter(list, liveCycleOwner = viewLifecycleOwner, requireContext())
-            binding?.recyclerView?.adapter = adapter
+            vm.getMovieFromApi(binding?.searchEditText?.text.toString())
         }
     }
 

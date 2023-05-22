@@ -96,4 +96,10 @@
     <string name="lorem_ipsem">lorem ipsem lorem ipsem lorem ipsem lorem ipsem lorem ipsemlorem ipsem</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie">movie</string>
+    <string name="name">Name</string>
+    <string name="_2022">2022</string>
+    <string name="actors">Actors</string>
+    <string name="plot">Plot</string>
+    <string name="genre">genre</string>
 </resources>
