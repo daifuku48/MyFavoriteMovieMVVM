@@ -2,27 +2,24 @@ package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data
 
 import com.google.gson.annotations.SerializedName
 
-interface DetailMovie {
-    data class Base (
+    data class DetailMovie (
         @SerializedName("Title")
-        private val title : String,
+        val title : String,
         @SerializedName("Year")
-        private val year : String,
+        val year : String,
         @SerializedName("Rated")
-        private val rated: String,
+        val rated: String,
         @SerializedName("Released")
-        private val released: String,
+        val released: String,
         @SerializedName("Runtime")
-        private val time: String,
+        val time: String,
         @SerializedName("Genre")
-        private val genre: String,
+        val genre: String,
         @SerializedName("Director")
-        private val director: String,
+        val director: String,
         @SerializedName("Actors")
-        private val actors: String,
+        val actors: String,
         @SerializedName("Plot")
-        private val plot: String,
+        val plot: String,
         @SerializedName("Poster")
-        private val poster : String,
-    ) : DetailMovie
-}
+        val poster : String)

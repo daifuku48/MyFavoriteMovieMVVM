@@ -12,23 +12,24 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_detailMovieFragment"
-            app:destination="@id/detailMovieFragment" />
+            app:destination="@id/detailMovieFragment"/>
     </fragment>
     <fragment
         android:id="@+id/detailMovieFragment"
         android:name="com.haritonovdanyluaa.myfavoritemovie.view.fragments.DetailMovieFragment"
         android:label="fragment_detail_movie"
-        tools:layout="@layout/fragment_detail_movie" />
+        tools:layout="@layout/fragment_detail_movie">
+        <argument
+            android:name="title"
+            app:argType="string"/>
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.haritonovdanyluaa.myfavoritemovie.view.fragments.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_detailMovieFragment"
-            app:destination="@id/detailMovieFragment" />
-        <argument
-            android:name="title"
-            app:argType="string"/>
+            app:destination="@id/detailMovieFragment"/>
     </fragment>
 </navigation>

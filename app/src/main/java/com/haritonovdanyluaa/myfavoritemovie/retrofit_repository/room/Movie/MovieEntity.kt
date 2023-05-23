@@ -17,18 +17,10 @@ data class MovieEntity(
      val title : String,
     @ColumnInfo(name = "year")
      val year : String,
-    @ColumnInfo(name = "rated")
-     val rated: String,
-    @ColumnInfo(name = "released")
-     val released: String,
-    @ColumnInfo(name = "time")
-     val time: String,
     @ColumnInfo(name = "genre")
      val genre: String,
     @ColumnInfo(name = "genreId")
-     val genreId: String,
-    @ColumnInfo(name = "director")
-     val director: String,
+     val genreId: Int,
     @ColumnInfo(name = "actors")
      val actors: String,
     @ColumnInfo(name = "plot")

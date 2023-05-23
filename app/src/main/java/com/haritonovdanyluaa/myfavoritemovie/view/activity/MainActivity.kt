@@ -2,13 +2,17 @@ package com.haritonovdanyluaa.myfavoritemovie.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.haritonovdanyluaa.myfavoritemovie.R
 import com.haritonovdanyluaa.myfavoritemovie.databinding.ActivityMainBinding
 import com.haritonovdanyluaa.myfavoritemovie.view.adapters.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var navController : NavController
     private var binding : ActivityMainBinding? = null
     private var viewPagerAdapter: ViewPagerAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {

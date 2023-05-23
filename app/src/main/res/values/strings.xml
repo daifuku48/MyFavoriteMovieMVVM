@@ -102,4 +102,6 @@
     <string name="actors">Actors</string>
     <string name="plot">Plot</string>
     <string name="genre">genre</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.haritonovdanyluaa.myfavoritemovie.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.haritonovdanyluaa.myfavoritemovie.databinding.FragmentFavoritesBindin
 import com.haritonovdanyluaa.myfavoritemovie.databinding.FragmentSearchBinding
 import com.haritonovdanyluaa.myfavoritemovie.view.ViewModel.MainViewModel
 import com.haritonovdanyluaa.myfavoritemovie.view.ViewModel.MainViewModelFactory
+import com.haritonovdanyluaa.myfavoritemovie.view.activity.DetailActivity
 import com.haritonovdanyluaa.myfavoritemovie.view.adapters.RecyclerAdapter
 import org.koin.dsl.koinApplication
 
@@ -42,8 +44,9 @@ class SearchFragment : Fragment() {
             val adapter = RecyclerAdapter(items.Search, requireContext())
             adapter.setOnItemClickListener(object : RecyclerAdapter.OnItemClickListener{
                 override fun onItemClick(position: Int) {
-
-                        items.Search[position].Title
+                    val intent = Intent(requireContext(), DetailActivity::class.java)
+                    intent.putExtra("title", items.Search[position].Title)
+                    startActivity(intent)
                 }
             })
             binding?.recyclerView?.adapter = adapter

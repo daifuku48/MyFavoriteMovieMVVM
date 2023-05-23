@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.DetailMovie
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.Movie
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.MovieApi
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.SearchData
@@ -109,10 +110,17 @@ class Repository(application: Application) {
 
     suspend fun searchMoviesFromApi(name: String) : Response<SearchData>
     {
-        var myLiveData : Response<SearchData>
         var result : Response<SearchData>
         coroutineScope {
             result = movieApi.getMovies(name, "244031db")
+        }
+        return result
+    }
+
+    suspend fun getDetailMovie(name: String) : Response<DetailMovie> {
+        var result : Response<DetailMovie>
+        coroutineScope {
+            result = movieApi.getDetailMovies(name, "244031db")
         }
         return result
     }

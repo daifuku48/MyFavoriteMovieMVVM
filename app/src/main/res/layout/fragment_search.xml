@@ -7,7 +7,6 @@
     tools:context=".view.fragments.SearchFragment"
     android:background="@color/blue_300">
 
-
     <LinearLayout
         android:id="@+id/fragment_search_linear_layout"
         android:layout_width="match_parent"

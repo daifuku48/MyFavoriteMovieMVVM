@@ -15,5 +15,5 @@ interface MovieApi {
     suspend fun getDetailMovies(
         @Query("t") t: String,
         @Query("apikey") apikey: String
-    ) : List<DetailMovie.Base>
+    ) : Response<DetailMovie>
 }
