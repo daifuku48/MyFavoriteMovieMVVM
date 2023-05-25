@@ -1,6 +1,7 @@
 package com.haritonovdanyluaa.myfavoritemovie.view.ViewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +26,7 @@ class DetailViewModel(private var application: Application) : AndroidViewModel(a
         get() = _detailMovie
 
     var jobDetailMovie: Job? = null
-
+    var jobInsert: Job? = null
     fun getDetailMovieFromApi(name: String) {
         jobDetailMovie = CoroutineScope(Dispatchers.IO).launch {
             val response = appRepository.getDetailMovie(name)
@@ -42,10 +43,12 @@ class DetailViewModel(private var application: Application) : AndroidViewModel(a
         val movieEntity = MovieEntity(0, detailMovie.value?.title.toString(),
         detailMovie.value?.year.toString(),
         detailMovie.value?.genre.toString(),
-        0,
         detailMovie.value?.actors.toString(),
         detailMovie.value?.plot.toString(),
         detailMovie.value?.poster.toString())
-        appRepository.insertMovie(movieEntity)
+        jobInsert = CoroutineScope(Dispatchers.IO).launch {
+            appRepository.insertMovie(movieEntity)
+            Log.d("movie", "movie has inserted")
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.haritonovdanyluaa.myfavoritemovie.view.ViewModel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,11 +22,12 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel(private var application: Application) : AndroidViewModel(application) {
     private var appRepository : Repository = Repository(application)
-    private var movies : LiveData<List<MovieEntity>> = appRepository.getAllMovies()
-    private var genres : LiveData<List<GenreEntity>> = appRepository.getAllGenres()
+    private var _movies = MutableLiveData<List<MovieEntity>>()
     private var _movieList = MutableLiveData<SearchData>()
     val movieList : LiveData<SearchData>
         get() = _movieList
+    val movies : LiveData<List<MovieEntity>>
+        get() = _movies
 
     private var _detailMovie = MutableLiveData<DetailMovie>()
     val detailMovie : LiveData<DetailMovie>
@@ -33,10 +35,8 @@ class MainViewModel(private var application: Application) : AndroidViewModel(app
 
     var jobMovie: Job? = null
     var jobDetailMovie: Job? = null
-    fun getMovieByGenre(genre: GenreEntity) : LiveData<List<MovieEntity>>
-    {
-        return appRepository.getGenreMovies(genre)
-    }
+    var job: Job? = null
+
     fun getMovieFromApi(name: String) {
         jobMovie = CoroutineScope(Dispatchers.IO).launch {
             val response = appRepository.searchMoviesFromApi(name)
@@ -62,6 +62,17 @@ class MainViewModel(private var application: Application) : AndroidViewModel(app
     fun deleteMovie(movieEntity: MovieEntity)
     {
         appRepository.deleteMovie(movieEntity)
+    }
+
+    fun getAllMovies()
+    {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            Log.d("movie", "movie is searching")
+            val response =  appRepository.getAllMovies()
+            Log.d("movie", "movie has searched")
+            _movies.postValue(response.value)
+        }
+
     }
 
 }

@@ -7,10 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 
-@Database(entities = [MovieEntity::class, GenreEntity::class], version = 1)
+@Database(entities = [MovieEntity::class, GenreEntity::class], version = 10)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieDao() : MovieDAO
-    abstract fun genreDao() : GenreDAO
     companion object {
 
         @Volatile
@@ -25,7 +24,6 @@ abstract class MovieDatabase : RoomDatabase() {
                     .fallbackToDestructiveMigration()
                     .build()
                 Instance = instance
-
                 instance
             }
         }

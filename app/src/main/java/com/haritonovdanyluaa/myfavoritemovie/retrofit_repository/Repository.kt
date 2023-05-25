@@ -1,15 +1,11 @@
 package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.DetailMovie
-import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.Movie
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.MovieApi
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.data.SearchData
-import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreDAO
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.GenreEntity
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieDAO
 import com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie.MovieDatabase
@@ -23,22 +19,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 class Repository(application: Application) {
 
     private lateinit  var movieApi : MovieApi
-    private var genreDAO : GenreDAO
     private var movieDAO : MovieDAO
-    private var genres : LiveData<List<GenreEntity>>
-        get() {
-            return genreDAO.getAllGenre()
-        }
-        set(value) {}
-    private var movies : LiveData<List<MovieEntity>>? = null
+
     init{
         val movieDatabase = MovieDatabase.getDatabase(application)
-        genreDAO = movieDatabase.genreDao()
         movieDAO = movieDatabase.movieDao()
         configureRetrofit()
     }
@@ -61,35 +49,18 @@ class Repository(application: Application) {
         movieApi = retrofit.create(MovieApi::class.java)
     }
 
-    fun getGenreMovies(genre: GenreEntity) : LiveData<List<MovieEntity>>
+    suspend fun getAllMovies() : LiveData<List<MovieEntity>>
     {
-        var movies : LiveData<List<MovieEntity>>? = null
-        CoroutineScope(Dispatchers.IO).launch  {
-            movies = movieDAO.getAllWithGenre(genre.name)
+        var result : LiveData<List<MovieEntity>>
+        coroutineScope {
+            result = movieDAO.getAllMovie()
         }
-        return movies!!
+        return result
     }
 
-    fun getAllMovies() : LiveData<List<MovieEntity>>
+    suspend fun insertMovie(movieEntity: MovieEntity)
     {
-        return movieDAO.getAllMovie()
-    }
-
-    fun getAllGenres() : LiveData<List<GenreEntity>>
-    {
-        return genreDAO.getAllGenre()
-    }
-
-    fun insertGenre(genreEntity: GenreEntity)
-    {
-        CoroutineScope(Dispatchers.IO).launch  {
-            genreDAO.insertGenre(genreEntity)
-        }
-    }
-
-    fun insertMovie(movieEntity: MovieEntity)
-    {
-        CoroutineScope(Dispatchers.IO).launch{
+        coroutineScope {
             movieDAO.insertFavoriteMovie(movieEntity)
         }
     }
@@ -98,13 +69,6 @@ class Repository(application: Application) {
     {
         CoroutineScope(Dispatchers.IO).launch{
             movieDAO.deleteFavoriteMovie(movie)
-        }
-    }
-
-    fun deleteGenre(genre: GenreEntity)
-    {
-        CoroutineScope(Dispatchers.IO).launch{
-            genreDAO.deleteGenre(genre)
         }
     }
 

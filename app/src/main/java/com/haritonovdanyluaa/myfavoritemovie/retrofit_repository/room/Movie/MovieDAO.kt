@@ -1,6 +1,7 @@
 package com.haritonovdanyluaa.myfavoritemovie.retrofit_repository.room.Movie
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -19,9 +20,6 @@ interface MovieDAO {
     @Delete
     suspend fun deleteFavoriteMovie(movie: MovieEntity)
 
-    @Query("SELECT * FROM MOVIE_TABLE")
+    @Query("SELECT * FROM movie_table")
     fun getAllMovie() : LiveData<List<MovieEntity>>
-
-    @Query("SELECT * FROM MOVIE_TABLE WHERE genre = :genre")
-    fun getAllWithGenre(genre: String) : LiveData<List<MovieEntity>>
 }

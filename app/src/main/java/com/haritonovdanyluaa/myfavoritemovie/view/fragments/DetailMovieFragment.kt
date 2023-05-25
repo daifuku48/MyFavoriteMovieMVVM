@@ -55,6 +55,8 @@ class DetailMovieFragment : Fragment() {
 
         binding?.confirmButton?.setOnClickListener {
             vm.insertMovie()
+            val intentCancel = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intentCancel)
         }
     }
 
